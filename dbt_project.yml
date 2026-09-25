@@ -1,0 +1,21 @@
+name: dbt_airbnb_pipeline
+version: '2.0.0'
+profile: dbt-airbnb-pipeline
+
+model-paths: [models]
+seed-paths: [seeds]
+test-paths: [tests]
+analysis-paths: [analysis]
+macro-paths: [macros]
+snapshot-paths: [snapshots]
+docs-paths: [docs]
+
+
+models:
+  dbt_airbnb_pipeline:
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: view
+    marts:
+      +materialized: table
