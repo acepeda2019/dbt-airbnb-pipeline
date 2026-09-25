@@ -10,12 +10,23 @@ macro-paths: [macros]
 snapshot-paths: [snapshots]
 docs-paths: [docs]
 
+clean-targets:
+    - target
+    - dbt_modules
+    - dbt_packages
+    - logs
+
+on-run-start:
+  - "{{ create_target_database() }}"
 
 models:
   dbt_airbnb_pipeline:
     staging:
+      +schema: staging
       +materialized: view
     intermediate:
+      +schema: intermediate
       +materialized: view
     marts:
+      +schema: marts
       +materialized: table
