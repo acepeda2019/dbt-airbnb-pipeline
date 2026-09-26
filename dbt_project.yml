@@ -1,0 +1,32 @@
+name: dbt_airbnb_pipeline
+version: '2.0.0'
+profile: dbt-airbnb-pipeline
+
+model-paths: [models]
+seed-paths: [seeds]
+test-paths: [tests]
+analysis-paths: [analysis]
+macro-paths: [macros]
+snapshot-paths: [snapshots]
+docs-paths: [docs]
+
+clean-targets:
+    - target
+    - dbt_modules
+    - dbt_packages
+    - logs
+
+on-run-start:
+  - "{{ create_target_database() }}"
+
+models:
+  dbt_airbnb_pipeline:
+    staging:
+      +schema: staging
+      +materialized: view
+    intermediate:
+      +schema: intermediate
+      +materialized: view
+    marts:
+      +schema: marts
+      +materialized: table

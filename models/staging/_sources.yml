@@ -1,0 +1,11 @@
+sources:
+  - name: airbnb
+    database: airbnb
+    schema: raw
+    tables:
+      - name: bookings
+        description: 'airbnb bookings'
+      - name: listings
+        description: 'airbnb listings'
+      - name: hosts
+        description: 'airbnb hosts'
