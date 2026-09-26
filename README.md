@@ -34,7 +34,7 @@ dbt project that transforms raw Airbnb booking/listing/host data (landed in Snow
 | Target | Database | Schema | Use |
 |---|---|---|---|
 | `dev` (default) | `AIRBNB_<you>` | `staging` / `intermediate` / `marts` | Your personal sandbox |
-| `prod` | `AIRBNB_PRODUCTION` | `staging` / `intermediate` / `marts` | Shared production build |
+| `prod` | `AIRBNB` | `staging` / `intermediate` / `marts` | Shared production build |
 
 ## Prerequisites
 
@@ -121,7 +121,7 @@ This project overrides dbt's default database/schema naming (see `macros/generat
 - Your **database** is `AIRBNB_<your schema>` — e.g. schema `jdoe` → database `AIRBNB_JDOE`. Everyone gets their own isolated sandbox, built fresh from the shared `AIRBNB.RAW` source data.
 - Your **schemas within it** are flat and layer-based: `staging`, `intermediate`, `marts` (not prefixed/suffixed further).
 - An `on-run-start` hook (`macros/create_target_database.sql`) runs `CREATE DATABASE IF NOT EXISTS` for your personal database before every `dbt run`/`dbt build`/`dbt test`. The `TRANSFORM` role already has account-level `CREATE DATABASE` privilege, and since it creates the database itself, it automatically owns it — so there's nothing left for you to grant by hand.
-- The `prod` target always resolves to the shared `AIRBNB_PRODUCTION` database, already provisioned.
+- The `prod` target is the one exception: it always resolves to the shared `AIRBNB` database (the same one raw data lands in under `AIRBNB.RAW`), regardless of schema — already provisioned, no per-dev suffix.
 
 ## Raw data ingestion
 

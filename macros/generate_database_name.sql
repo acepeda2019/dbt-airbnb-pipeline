@@ -1,7 +1,7 @@
 {% macro generate_database_name(custom_database_name=none, node=none) -%}
 
     {%- set default_database = target.database -%}
-    {%- if target.schema == 'default' -%}
+    {%- if target.name == 'prod' or target.schema == 'default' -%}
 
         {{ default_database }}
 
@@ -12,4 +12,3 @@
     {%- endif -%}
 
 {%- endmacro %}
- ~/Doc/G/dbt-fundament
