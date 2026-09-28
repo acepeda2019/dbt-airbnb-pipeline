@@ -2,6 +2,7 @@
 /target
 /logs
 /dbt_packages
+/dbt_packages.nosync
 /data/raw
 
 # Byte-compiled / optimized / DLL files
