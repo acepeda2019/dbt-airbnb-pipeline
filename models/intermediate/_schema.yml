@@ -1,17 +1,134 @@
 models:
-    - name: int_bookings
-      description: Bookings table with a fees and revenue caluclated
-      columns:
-        - name: booking_id
-          description: Primary key of int_bookings table
-          data_tests:
+  - name: int_bookings
+    description: Bookings table with a fees and revenue caluclated
+    columns:
+      - name: booking_id
+        data_type: varchar
+        description: Primary key of int_bookings table
+        data_tests:
             - not_null
             - unique
-        - name: listing_id
-          description: Foreign key to stg_listings table
-          data_tests:
+
+      - name: listing_id
+        data_type: number
+        description: Foreign key to stg_listings table
+        data_tests:
             - not_null
             - relationships:
                 arguments: 
                   to: ref('stg_listings')
                   field: listing_id
+
+      - name: booking_date
+        data_type: timestamp_ntz
+        description: ""
+
+      - name: nights_booked
+        data_type: number
+        description: ""
+
+      - name: booking_amount
+        data_type: number
+        description: ""
+
+      - name: cleaning_fee
+        data_type: number
+        description: ""
+
+      - name: service_fee
+        data_type: number
+        description: ""
+
+      - name: total_fees
+        data_type: number
+        description: ""
+
+      - name: total_revenue
+        data_type: number
+        description: ""
+
+      - name: booking_status
+        data_type: varchar
+        description: ""
+
+      - name: created_at
+        data_type: timestamp_ntz
+        description: ""
+
+  - name: int_hosts
+    description: ""
+    columns:
+      - name: host_id
+        data_type: number
+        description: ""
+
+      - name: host_name
+        data_type: varchar
+        description: ""
+
+      - name: host_since
+        data_type: date
+        description: ""
+
+      - name: is_seasoned_host
+        data_type: boolean
+        description: Hosts that have been on the platform for at least 12 months.
+
+      - name: is_superhost
+        data_type: boolean
+        description: ""
+
+      - name: response_rate
+        data_type: number
+        description: ""
+
+      - name: created_at
+        data_type: timestamp_ntz
+        description: ""
+
+  - name: int_listings
+    description: ""
+    columns:
+      - name: listing_id
+        data_type: number
+        description: ""
+
+      - name: host_id
+        data_type: number
+        description: ""
+
+      - name: property_type
+        data_type: varchar
+        description: ""
+
+      - name: room_type
+        data_type: varchar
+        description: ""
+
+      - name: city
+        data_type: varchar
+        description: ""
+
+      - name: country
+        data_type: varchar
+        description: ""
+
+      - name: accommodates
+        data_type: number
+        description: ""
+
+      - name: bedrooms
+        data_type: number
+        description: ""
+
+      - name: bathrooms
+        data_type: number
+        description: ""
+
+      - name: price_per_night
+        data_type: number
+        description: ""
+
+      - name: created_at
+        data_type: timestamp_ntz
+        description: ""
