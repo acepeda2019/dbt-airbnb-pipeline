@@ -1,0 +1,39 @@
+models:
+    - name: stg_bookings
+      description: Booking details containing nights booked, revenue, fees and status
+      columns:
+        - name: booking_id
+          description: Primary Key of bookings table
+          data_tests:
+            - unique
+            - not_null
+        - name: listing_id
+          description: Foreign Key to Listings table
+          data_tests:
+            - relationships:
+                arguments:
+                  to: ref('stg_listings')
+                  field: listing_id
+    - name: stg_listings
+      description: Detail of each property listing. Contains property and room type, location, accomodation sizes, and nightly prices.
+      columns:
+        - name: listing_id
+          description: Primary Key of listings table
+          data_tests:
+            - unique
+            - not_null
+        - name: host_id
+          description: Foreign Key to the hosts table
+          data_tests:
+            - relationships:
+                arguments:
+                  to: ref('stg_hosts')
+                  field: host_id
+    - name: stg_hosts
+      description: Host details containing name, host since, superhost status, and response rate
+      columns:
+        - name: host_id
+          description: Primary Key of host table
+          data_tests:
+            - unique
+            - not_null
