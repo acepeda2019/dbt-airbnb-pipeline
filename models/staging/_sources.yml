@@ -5,7 +5,22 @@ sources:
     tables:
       - name: bookings
         description: 'airbnb bookings'
+        columns:
+          - name: booking_id
+            data_tests:
+              - unique
+              - not_null
       - name: listings
         description: 'airbnb listings'
+        columns:
+          - name: listing_id
+            data_tests:
+              - unique
+              - not_null
       - name: hosts
         description: 'airbnb hosts'
+        columns:
+          - name: host_id
+            data_tests:
+              - unique
+              - not_null
