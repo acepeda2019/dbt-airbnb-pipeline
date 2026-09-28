@@ -10,10 +10,13 @@ macro-paths: [macros]
 snapshot-paths: [snapshots]
 docs-paths: [docs]
 
+# .nosync suffix keeps iCloud Drive from syncing installed packages
+# (it creates "file 2.sql" conflict copies that break dbt parsing)
+packages-install-path: dbt_packages.nosync
+
 clean-targets:
     - target
-    - dbt_modules
-    - dbt_packages
+    - dbt_packages.nosync
     - logs
 
 on-run-start:
