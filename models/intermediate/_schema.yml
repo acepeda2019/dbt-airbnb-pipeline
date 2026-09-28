@@ -1,0 +1,17 @@
+models:
+    - name: int_bookings
+      description: Bookings table with a fees and revenue caluclated
+      columns:
+        - name: booking_id
+          description: Primary key of int_bookings table
+          data_tests:
+            - not_null
+            - unique
+        - name: listing_id
+          description: Foreign key to stg_listings table
+          data_tests:
+            - not_null
+            - relationships:
+                arguments: 
+                  to: ref('stg_listings')
+                  field: listing_id
