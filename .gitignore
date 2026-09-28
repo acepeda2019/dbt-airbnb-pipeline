@@ -4,6 +4,7 @@
 /dbt_packages
 /dbt_packages.nosync
 /data/raw
+/analysis/sandbox.sql
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
