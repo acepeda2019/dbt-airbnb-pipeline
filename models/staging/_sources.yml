@@ -1,26 +1,77 @@
 sources:
-  - name: airbnb
+  - name: raw
     database: airbnb
-    schema: raw
     tables:
       - name: bookings
         description: 'airbnb bookings'
         columns:
           - name: booking_id
+            data_type: varchar
             data_tests:
               - unique
               - not_null
+          - name: listing_id
+            data_type: number
+          - name: booking_date
+            data_type: timestamp_ntz
+          - name: nights_booked
+            data_type: number
+          - name: booking_amount
+            data_type: number
+          - name: cleaning_fee
+            data_type: number
+          - name: service_fee
+            data_type: number
+          - name: booking_status
+            data_type: varchar
+          - name: created_at
+            data_type: timestamp_ntz
+
       - name: listings
         description: 'airbnb listings'
         columns:
           - name: listing_id
+            data_type: number
             data_tests:
               - unique
               - not_null
+          - name: host_id
+            data_type: number
+          - name: property_type
+            data_type: varchar
+          - name: room_type
+            data_type: varchar
+          - name: city
+            data_type: varchar
+          - name: country
+            data_type: varchar
+          - name: accommodates
+            data_type: number
+          - name: bedrooms
+            data_type: number
+          - name: bathrooms
+            data_type: number
+          - name: price_per_night
+            data_type: number
+          - name: created_at
+            data_type: timestamp_ntz
+
       - name: hosts
         description: 'airbnb hosts'
         columns:
           - name: host_id
+            data_type: number
             data_tests:
               - unique
               - not_null
+          - name: host_name
+            data_type: varchar
+          - name: host_since
+            data_type: date
+          - name: is_superhost
+            data_type: boolean
+          - name: response_rate
+            data_type: number
+          - name: created_at
+            data_type: timestamp_ntz
+

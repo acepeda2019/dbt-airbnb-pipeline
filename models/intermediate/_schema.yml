@@ -1,0 +1,262 @@
+models:
+  - name: int_bookings
+    description: Bookings table with a fees and revenue caluclated
+    columns:
+      - name: booking_id
+        data_type: varchar
+        description: "{{ doc('booking_id') }}"
+        data_tests:
+            - not_null
+            - unique
+
+      - name: listing_id
+        data_type: number
+        description: "{{ doc('listing_id') }}"
+        data_tests:
+            - not_null
+            - relationships:
+                arguments:
+                  to: ref('stg_listings')
+                  field: listing_id
+
+      - name: booking_date
+        data_type: timestamp_ntz
+        description: Timestamp the booking was made
+
+      - name: nights_booked
+        data_type: number
+        description: Number of nights in the booking
+
+      - name: booking_amount
+        data_type: number
+        description: Booking amount before fees, multiplied by nights_booked to calculate total_revenue
+
+      - name: cleaning_fee
+        data_type: number
+        description: Cleaning fee charged on the booking
+
+      - name: service_fee
+        data_type: number
+        description: Service fee charged on the booking
+
+      - name: total_fees
+        data_type: number
+        description: Sum of cleaning_fee and service_fee
+
+      - name: total_revenue
+        data_type: number
+        description: nights_booked multiplied by booking_amount (rounded to 4 decimal places), plus total_fees
+
+      - name: booking_status
+        data_type: varchar
+        description: "{{ doc('booking_status') }}"
+
+      - name: created_at
+        data_type: timestamp_ntz
+        description: "{{ doc('created_at') }} Used as the incremental watermark."
+
+  - name: int_hosts
+    description: Hosts table with a seasoned host flag calculated from host_since
+    columns:
+      - name: host_id
+        data_type: number
+        description: "{{ doc('host_id') }}"
+
+      - name: host_name
+        data_type: varchar
+        description: Name of the host, upper-cased and trimmed in staging
+
+      - name: host_since
+        data_type: date
+        description: Date the host joined the platform
+
+      - name: is_seasoned_host
+        data_type: boolean
+        description: Hosts that have been on the platform for at least 12 months.
+
+      - name: is_superhost
+        data_type: boolean
+        description: "{{ doc('is_superhost') }}"
+
+      - name: response_rate
+        data_type: number
+        description: "{{ doc('response_rate') }}"
+
+      - name: created_at
+        data_type: timestamp_ntz
+        description: "{{ doc('created_at') }}"
+
+  - name: int_listings
+    description: Property listings with property and room type, location, capacity and nightly price
+    columns:
+      - name: listing_id
+        data_type: number
+        description: "{{ doc('listing_id') }}"
+
+      - name: host_id
+        data_type: number
+        description: "{{ doc('host_id') }}"
+
+      - name: property_type
+        data_type: varchar
+        description: Type of property, upper-cased and trimmed in staging
+
+      - name: room_type
+        data_type: varchar
+        description: Type of room offered, upper-cased and trimmed in staging
+
+      - name: city
+        data_type: varchar
+        description: City the listing is in, upper-cased and trimmed in staging
+
+      - name: country
+        data_type: varchar
+        description: Country the listing is in, upper-cased and trimmed in staging
+
+      - name: accommodates
+        data_type: number
+        description: Number of guests the listing accommodates
+
+      - name: bedrooms
+        data_type: number
+        description: Number of bedrooms
+
+      - name: bathrooms
+        data_type: number
+        description: Number of bathrooms
+
+      - name: price_per_night
+        data_type: number
+        description: "{{ doc('price_per_night') }}"
+
+      - name: created_at
+        data_type: timestamp_ntz
+        description: "{{ doc('created_at') }}"
+
+  - name: int_booking_changes_status
+    description: >
+      History of booking status changes, one row per continuous status of a
+      booking. Built from src_bookings_snapshot with the track_column_changes macro.
+    columns:
+      - name: booking_id
+        data_type: varchar
+        description: "{{ doc('booking_id') }}"
+
+      - name: event_id
+        data_type: varchar
+        description: "{{ doc('change_event_id') }}"
+        data_tests:
+            - not_null
+            - unique
+
+      - name: booking_status
+        data_type: varchar
+        description: "{{ doc('booking_status') }}"
+
+      - name: grp
+        data_type: number
+        description: "{{ doc('change_grp') }}"
+
+      - name: valid_from
+        data_type: timestamp_ntz
+        description: "{{ doc('change_valid_from') }}"
+
+      - name: valid_to
+        data_type: timestamp_ntz
+        description: "{{ doc('change_valid_to') }}"
+
+  - name: int_hosts_changes_superhost
+    description: >
+      History of superhost status changes, one row per continuous superhost
+      state of a host. Built from src_hosts_snapshot with the track_column_changes macro.
+    columns:
+      - name: host_id
+        data_type: number
+        description: "{{ doc('host_id') }}"
+
+      - name: event_id
+        data_type: varchar
+        description: "{{ doc('change_event_id') }}"
+        data_tests:
+          - unique
+          - not_null
+
+      - name: is_superhost
+        data_type: boolean
+        description: "{{ doc('is_superhost') }}"
+
+      - name: grp
+        data_type: number
+        description: "{{ doc('change_grp') }}"
+
+      - name: valid_from
+        data_type: timestamp_ntz
+        description: "{{ doc('change_valid_from') }}"
+
+      - name: valid_to
+        data_type: timestamp_ntz
+        description: "{{ doc('change_valid_to') }}"
+
+  - name: int_hosts_changes_response_rate
+    description: >
+      History of response rate changes, one row per continuous response rate
+      of a host. Built from src_hosts_snapshot with the track_column_changes macro.
+    columns:
+      - name: host_id
+        data_type: number
+        description: "{{ doc('host_id') }}"
+
+      - name: event_id
+        data_type: varchar
+        description: "{{ doc('change_event_id') }}"
+        data_tests:
+          - unique
+          - not_null
+
+      - name: response_rate
+        data_type: number
+        description: "{{ doc('response_rate') }}"
+
+      - name: grp
+        data_type: number
+        description: "{{ doc('change_grp') }}"
+
+      - name: valid_from
+        data_type: timestamp_ntz
+        description: "{{ doc('change_valid_from') }}"
+
+      - name: valid_to
+        data_type: timestamp_ntz
+        description: "{{ doc('change_valid_to') }}"
+
+  - name: int_listings_changes_price_per_night
+    description: >
+      History of nightly price changes, one row per continuous price of a
+      listing. Built from src_listings_snapshot with the track_column_changes macro.
+    columns:
+      - name: listing_id
+        data_type: number
+        description: "{{ doc('listing_id') }}"
+
+      - name: event_id
+        data_type: varchar
+        description: "{{ doc('change_event_id') }}"
+        data_tests:
+          - unique
+          - not_null
+          
+      - name: price_per_night
+        data_type: number
+        description: "{{ doc('price_per_night') }}"
+
+      - name: grp
+        data_type: number
+        description: "{{ doc('change_grp') }}"
+
+      - name: valid_from
+        data_type: timestamp_ntz
+        description: "{{ doc('change_valid_from') }}"
+
+      - name: valid_to
+        data_type: timestamp_ntz
+        description: "{{ doc('change_valid_to') }}"

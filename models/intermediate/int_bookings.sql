@@ -1,15 +1,16 @@
 {{ config(
     materialized='incremental',
     incremental_strategy='merge',
-    unique_key='booking_id' 
+    unique_key='booking_id'
 )}}
+
 WITH source as (
 
-    SELECT * FROM {{ source('raw', 'bookings') }}
+    SELECT * FROM {{ ref('stg_bookings') }}
 
 ),
 
-renamed as (
+bookings as (
 
     SELECT
         booking_id,
@@ -19,6 +20,8 @@ renamed as (
         booking_amount,
         cleaning_fee,
         service_fee,
+        cleaning_fee + service_fee as total_fees,
+        {{ multiply('nights_booked', 'booking_amount', 4) }} + total_fees as total_revenue,
         booking_status,
         created_at
     FROM source
@@ -26,8 +29,7 @@ renamed as (
 )
 
 SELECT * 
-FROM renamed
+FROM bookings
 {%- if is_incremental() %}
 WHERE created_at >= coalesce((select max(created_at) from {{ this }}), '1900-01-01')
-{%- endif %}
-
+{%- endif -%}
