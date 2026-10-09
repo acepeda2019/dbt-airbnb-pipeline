@@ -10,7 +10,7 @@ hosts as (
         host_id,
         host_name,
         host_since,
-        datediff(month, host_since, current_date) > 12 as is_seasoned_host,
+        datediff(month, host_since, current_date) >= 12 as is_seasoned_host,
         is_superhost,
         response_rate,
         created_at
