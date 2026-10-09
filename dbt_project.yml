@@ -33,3 +33,9 @@ models:
     marts:
       +schema: marts
       +materialized: table
+
+snapshots:
+  dbt_airbnb_pipeline:
+    +schema: snapshots
+    +dbt_valid_to_current: to_date('9999-12-31')
+    +hard_deletes: new_record
