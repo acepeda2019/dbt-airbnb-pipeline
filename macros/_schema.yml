@@ -1,4 +1,21 @@
 macros:
+    - name: as_of_join
+      description: >
+        Join condition for looking up a change-history row as of a date.
+        Falls back to the earliest known state when the date predates all history. 
+        Example: 
+          A booking is placed on 2026-10-01 but the booking status wasn't extracted until 2026-11-01.
+          The booking_date pre-dates the created_at date of the status so a point-in-time join will fail. 
+          In this case, this macro will fallback to the earliest known state rather than using dates to form the join.
+      arguments:
+        - name: alias
+          type: string
+          description: The alias used for the foreign tbl of the join
+        - name: as_of_date
+          type: date
+          description: The column name from the primary table used to compare against the history table.
+          
+    
     - name: track_column_changes
       description: >
         Collapses a snapshot into one row per continuous state of a tracked
