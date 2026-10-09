@@ -21,31 +21,31 @@ models:
 
       - name: booking_date
         data_type: timestamp_ntz
-        description: Timestamp the booking was made
+        description: "{{ doc('booking_date') }}"
 
       - name: nights_booked
         data_type: number
-        description: Number of nights in the booking
+        description: "{{ doc('nights_booked') }}"
 
       - name: booking_amount
         data_type: number
-        description: Booking amount before fees, multiplied by nights_booked to calculate total_revenue
+        description: "{{ doc('booking_amount') }}"
 
       - name: cleaning_fee
         data_type: number
-        description: Cleaning fee charged on the booking
+        description: "{{ doc('cleaning_fee') }}"
 
       - name: service_fee
         data_type: number
-        description: Service fee charged on the booking
+        description: "{{ doc('service_fee') }}"
 
       - name: total_fees
         data_type: number
-        description: Sum of cleaning_fee and service_fee
+        description: "{{ doc('total_fees') }}"
 
       - name: total_revenue
         data_type: number
-        description: nights_booked multiplied by booking_amount (rounded to 4 decimal places), plus total_fees
+        description: "{{ doc('total_revenue') }}"
 
       - name: booking_status
         data_type: varchar
@@ -64,15 +64,15 @@ models:
 
       - name: host_name
         data_type: varchar
-        description: Name of the host, upper-cased and trimmed in staging
+        description: "{{ doc('host_name') }}"
 
       - name: host_since
         data_type: date
-        description: Date the host joined the platform
+        description: "{{ doc('host_since') }}"
 
       - name: is_seasoned_host
         data_type: boolean
-        description: Hosts that have been on the platform for at least 12 months.
+        description: "{{ doc('is_seasoned_host') }}"
 
       - name: is_superhost
         data_type: boolean
@@ -99,31 +99,31 @@ models:
 
       - name: property_type
         data_type: varchar
-        description: Type of property, upper-cased and trimmed in staging
+        description: "{{ doc('property_type') }}"
 
       - name: room_type
         data_type: varchar
-        description: Type of room offered, upper-cased and trimmed in staging
+        description: "{{ doc('room_type') }}"
 
       - name: city
         data_type: varchar
-        description: City the listing is in, upper-cased and trimmed in staging
+        description: "{{ doc('city') }}"
 
       - name: country
         data_type: varchar
-        description: Country the listing is in, upper-cased and trimmed in staging
+        description: "{{ doc('country') }}"
 
       - name: accommodates
         data_type: number
-        description: Number of guests the listing accommodates
+        description: "{{ doc('accommodates') }}"
 
       - name: bedrooms
         data_type: number
-        description: Number of bedrooms
+        description: "{{ doc('bedrooms') }}"
 
       - name: bathrooms
         data_type: number
-        description: Number of bathrooms
+        description: "{{ doc('bathrooms') }}"
 
       - name: price_per_night
         data_type: number
