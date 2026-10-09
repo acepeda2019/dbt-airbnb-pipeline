@@ -3,12 +3,12 @@ models:
       description: Booking details containing nights booked, revenue, fees and status
       columns:
         - name: booking_id
-          description: Primary Key of bookings table
+          description: "{{ doc('booking_id') }}"
           data_tests:
             - unique
             - not_null
         - name: listing_id
-          description: Foreign Key to Listings table
+          description: "{{ doc('listing_id') }}"
           data_tests:
             - relationships:
                 arguments:
@@ -18,12 +18,12 @@ models:
       description: Detail of each property listing. Contains property and room type, location, accomodation sizes, and nightly prices.
       columns:
         - name: listing_id
-          description: Primary Key of listings table
+          description: "{{ doc('listing_id') }}"
           data_tests:
             - unique
             - not_null
         - name: host_id
-          description: Foreign Key to the hosts table
+          description: "{{ doc('host_id') }}"
           data_tests:
             - relationships:
                 arguments:
@@ -33,7 +33,7 @@ models:
       description: Host details containing name, host since, superhost status, and response rate
       columns:
         - name: host_id
-          description: Primary Key of host table
+          description: "{{ doc('host_id') }}"
           data_tests:
             - unique
             - not_null

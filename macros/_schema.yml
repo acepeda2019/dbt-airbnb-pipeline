@@ -1,0 +1,64 @@
+macros:
+    - name: track_column_changes
+      description: >
+        Collapses a snapshot into one row per continuous state of a tracked
+        column, with valid_from / valid_to for each state.
+      arguments:
+        - name: snapshot_table
+          type: string
+          description: the name of the snapshot table, this is passed into a ref() function within the macro
+        - name: unique_key
+          type: string
+          description: column identifying the entity, eg. host_id
+        - name: column_to_change
+          type: string
+          description: column whose changes are tracked, eg. is_superhost
+
+    - name: multiply
+      description: >
+        Multiplies two values and rounds the result. Renders as
+        ROUND(left * right, precision).
+      arguments:
+        - name: left
+          type: string
+          description: column or SQL expression on the left side, eg. booking_amount
+        - name: right
+          type: string
+          description: column or SQL expression on the right side, eg. a fee rate
+        - name: precision
+          type: integer
+          description: number of decimal places to round to, defaults to 2
+
+    - name: create_target_database
+      description: >
+        Creates the target database if it does not already exist, named
+        <target.database>_<target.schema>. Takes no arguments and runs the
+        statement directly against the warehouse.
+
+    - name: generate_database_name
+      description: >
+        Overrides dbt's built-in database naming. Returns target.database
+        when the target schema is 'default', otherwise
+        <target.database>_<target.schema>, so each target schema gets its own
+        database. Called by dbt automatically, not from models.
+      arguments:
+        - name: custom_database_name
+          type: string
+          description: database configured on the node, ignored by this override
+        - name: node
+          type: string
+          description: "{{ doc('macro_node_arg') }}"
+
+    - name: generate_schema_name
+      description: >
+        Overrides dbt's built-in schema naming. Returns the custom schema
+        exactly as configured (without the target schema prefix dbt adds by
+        default), or target.schema when no custom schema is set. Called by
+        dbt automatically, not from models.
+      arguments:
+        - name: custom_schema_name
+          type: string
+          description: schema configured on the node, none when not set
+        - name: node
+          type: string
+          description: "{{ doc('macro_node_arg') }}"
